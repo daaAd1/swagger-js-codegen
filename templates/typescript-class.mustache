@@ -20,6 +20,26 @@ class ApiError {
   }
 }
 
+class RestError {
+  public message: string;
+  public details: {
+      message: string;
+      description: string;
+      name: string;
+      stack: string;
+  };
+
+  constructor(message: string) {
+    this.message = message;
+    this.details = {
+        message,
+        description: message,
+        name: message,
+        stack: message
+    };
+  }
+}
+
 /**
  * {{&description}}
  * @class {{&className}}

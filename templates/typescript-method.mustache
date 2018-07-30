@@ -79,7 +79,7 @@
         {{^isSingleton}}
             {{^isPathParameter}}
                 if(parameters['{{&camelCaseName}}'] === undefined) {
-                    throw new Error('Missing required {{&paramType}} parameter: {{&camelCaseName}}');
+                    throw new RestError('Missing required {{&paramType}} parameter: {{&camelCaseName}}');
                 }
             {{/isPathParameter}}
         {{/isSingleton}}
