@@ -14,6 +14,7 @@ export type {{&name}} = {{#tsType}}{{> type}}{{/tsType}};
 class ApiError {
   public message: string;
   public details: Error;
+  public code: number;
 
   constructor(message: string) {
     this.message = message;
@@ -88,7 +89,12 @@ class {{&className}} {
         for (let p in parameters) {
             if (parameters.hasOwnProperty(p)) {
                 if(parameters[p] !== undefined) {    
-                    const parameter = parameters[p] || "";
+                    let parameter = parameters[p];
+
+                    if(parameter === undefined) {
+                        parameter = '';
+                    }
+
                     str.push(`${encodeURIComponent(p)}=${encodeURIComponent(parameter.toString())}`);
                 }
             }
@@ -150,6 +156,7 @@ class {{&className}} {
         } else {
             const err = new ApiError(response.statusText);
             err.details = await response.json();
+            err.code = response.status;
             throw err;
         }
     }

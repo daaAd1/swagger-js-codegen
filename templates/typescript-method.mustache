@@ -58,10 +58,10 @@
         {{#default}}
           /** set default value **/
           {{#isDefaultQuoted}}
-          queryParameters['{{&name}}'] = '{{default}}';
+          queryParameters['{{&name}}'] = queryParameters['{{&name}}'] !== undefined ? queryParameters['{{&name}}'] : '{{default}}';
           {{/isDefaultQuoted}}
           {{^isDefaultQuoted}}
-          queryParameters['{{&name}}'] = {{default}};
+          queryParameters['{{&name}}'] = queryParameters['{{&name}}'] !== undefined ? queryParameters['{{&name}}'] : {{default}};
           {{/isDefaultQuoted}}
         {{/default}}
       {{/isSingleton}}
