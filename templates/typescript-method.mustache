@@ -96,7 +96,7 @@
     {{#required}}
         {{#isQueryParameter}}
             if(queryParameters['{{&camelCaseName}}'] === undefined) {
-                throw new Error('Missing required parameter: {{&camelCaseName}}');
+                throw new RestError('Missing required {{&paramType}} parameter: {{&camelCaseName}}');
             }
         {{/isQueryParameter}}
     {{/required}}
