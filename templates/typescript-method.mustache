@@ -17,6 +17,11 @@
                     '{{&camelCaseName}}'{{&cardinality}}: {{> type}},
                 {{/isSingleton}}
             {{/isQueryParameter}}
+            {{#isHeaderParameter}}
+                {{^isSingleton}}
+                    '{{&camelCaseName}}'{{&cardinality}}: {{> type}},
+                {{/isSingleton}}
+            {{/isHeaderParameter}}
         {{/parameters}}
     } {{&defaultParam}},
     {{#hasBody}}
