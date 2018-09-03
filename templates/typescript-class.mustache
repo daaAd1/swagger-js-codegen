@@ -97,7 +97,7 @@ class {{&className}} {
                 if(parameters[p] !== undefined) {    
                     let parameter = parameters[p];
 
-                    if(parameter === undefined) {
+                    if(parameter === undefined || parameter === null) {
                         parameter = '';
                     }
 
