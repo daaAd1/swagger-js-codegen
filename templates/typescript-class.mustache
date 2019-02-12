@@ -95,13 +95,6 @@ class {{&className}} {
     {{/isSecure}}
 
     serializeQueryParams(parameters: QueryParameters) {
-<<<<<<< HEAD
-        return Object.keys(parameters)
-            .reduce((acc, p) => {
-                const param = parameters[p];
-                if(typeof param === 'undefined' || param === '') {
-                    return acc;
-=======
         const str: string[] = [];
         for (let p in parameters) {
             if (parameters.hasOwnProperty(p)) {
@@ -113,7 +106,6 @@ class {{&className}} {
                     }
 
                     str.push(`${encodeURIComponent(p)}=${encodeURIComponent(parameter.toString())}`);
->>>>>>> typescript-fix
                 }
                 return [...acc, `${encodeURIComponent(p)}=${encodeURIComponent(
                 String(parameters[p]),
