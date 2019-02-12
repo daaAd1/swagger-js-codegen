@@ -87,7 +87,7 @@
         {{/isSingleton}}
         {{^isSingleton}}
             if(typeof parameters['{{&camelCaseName}}'] !== 'undefined') {
-                headers.append('{{&name}}', queryParameters['{{&camelCaseName}}']!);
+                headers.append('{{&name}}', parameters['{{&camelCaseName}}']!);
             }
         {{/isSingleton}}
     {{/isHeaderParameter}}
