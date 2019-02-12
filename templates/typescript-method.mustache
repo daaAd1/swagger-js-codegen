@@ -17,6 +17,11 @@
                     '{{&camelCaseName}}'{{&cardinality}}: {{> type}},
                 {{/isSingleton}}
             {{/isQueryParameter}}
+            {{#isHeaderParameter}}
+                {{^isSingleton}}
+                    '{{&camelCaseName}}'{{&cardinality}}: {{> type}},
+                {{/isSingleton}}
+            {{/isHeaderParameter}}
         {{/parameters}}
     } {{&defaultParam}},
     {{#hasBody}}
@@ -60,17 +65,15 @@
             }
           });
         {{/isPatternType}}
-        {{#defaultSerialized}}
-          queryParameters['{{&name}}'] = {{&defaultSerialized}};
-        {{/defaultSerialized}}
-
-        {{^isPatternType}}
-        if(typeof parameters['{{&camelCaseName}}'] !== 'undefined'){
-            queryParameters['{{&name}}'] = parameters['{{&camelCaseName}}'];
-        }
-
-        queryParameters['{{&name}}'] = this.transformParameter(queryParameters['{{&name}}']{{#transformOperation}}, '{{&transformOperation}}'{{/transformOperation}});
-        {{/isPatternType}}
+        {{#default}}
+          /** set default value **/
+          {{#isDefaultQuoted}}
+          queryParameters['{{&name}}'] = queryParameters['{{&name}}'] !== undefined ? queryParameters['{{&name}}'] : '{{default}}';
+          {{/isDefaultQuoted}}
+          {{^isDefaultQuoted}}
+          queryParameters['{{&name}}'] = queryParameters['{{&name}}'] !== undefined ? queryParameters['{{&name}}'] : {{default}};
+          {{/isDefaultQuoted}}
+        {{/default}}
       {{/isSingleton}}
     {{/isQueryParameter}}
 
@@ -91,8 +94,8 @@
 
     {{#required}}
         {{#isQueryParameter}}
-            if(typeof parameters['{{&camelCaseName}}'] === 'undefined') {
-                throw new Error('Missing required parameter: {{&camelCaseName}}');
+            if(queryParameters['{{&camelCaseName}}'] === undefined) {
+                throw new RestError('Missing required {{&paramType}} parameter: {{&camelCaseName}}');
             }
         {{/isQueryParameter}}
     {{/required}}
