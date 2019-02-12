@@ -107,11 +107,9 @@ class {{&className}} {
 
                     str.push(`${encodeURIComponent(p)}=${encodeURIComponent(parameter.toString())}`);
                 }
-                return [...acc, `${encodeURIComponent(p)}=${encodeURIComponent(
-                String(parameters[p]),
-                )}`];
-            }, [])
-            .join('&');
+                return [...acc, `${encodeURIComponent(p)}=${encodeURIComponent(String(parameters[p]),[])}`].join('&');
+            }  
+        }
     }
 
     protected transformParameter(value: any, transformOperation?: string) {
