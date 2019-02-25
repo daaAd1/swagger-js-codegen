@@ -2,7 +2,7 @@
 
 exports[`Generates JAVASCRIPT class from Open Api 3.0 spec 1`] = `
 "/* eslint-disable */
-import 'isomorphic-fetch';
+import 'cross-fetch';
 
 class Api {
   constructor() {
@@ -402,7 +402,7 @@ export default new Api();
 
 exports[`Generates JAVASCRIPT class from Swagger 2 spec 1`] = `
 "/* eslint-disable */
-import 'isomorphic-fetch';
+import 'cross-fetch';
 
 class Api {
   constructor() {
