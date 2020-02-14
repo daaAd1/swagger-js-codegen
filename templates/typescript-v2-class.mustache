@@ -1,7 +1,8 @@
 
 /* eslint-disable */
 /* tslint:disable */
-import 'isomorphic-fetch';
+import * as fetch from 'node-fetch';
+import * as Headers from 'fetch-headers';
 
 export type ThenArg<T> = T extends Promise<infer U>
     ? U
