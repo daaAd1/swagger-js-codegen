@@ -105,14 +105,8 @@ class {{&className}} {
     private async request(method: string, url: string, body: any, headers: Headers = new Headers(), queryParameters: QueryParameters = {}) {
         const queryParams = queryParameters && Object.keys(queryParameters).length ? this.serializeQueryParams(queryParameters) : null ;
         const urlWithParams = url + (queryParams ? '?' + queryParams : '');
-
-        if(headers.get('Content-Type') === 'multipart/form-data') {
-            const form = new FormData();
-            for (let k in body) {
-                form.append(k, body[k]);
-            }
-            body = form;
-        } else if(headers.get('Content-Type') === 'application/json' && body && Object.keys(body).length > 0) {
+        
+        if(headers.get('Content-Type') === 'application/json' && body && Object.keys(body).length > 0) {
             body = JSON.stringify(body);
         } else {
             body = undefined;
