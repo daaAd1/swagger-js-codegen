@@ -60,9 +60,8 @@
 {{#isSecure}}
     headers = this.appendAuthHeaders(headers);
 {{/isSecure}}
-{{#headers}}
-    headers.append('{{&name}}', '{{&value}}');
-{{/headers}}
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json');
 
 {{#parameters}}
     {{#isQueryParameter}}
