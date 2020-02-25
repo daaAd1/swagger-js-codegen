@@ -1,8 +1,9 @@
 
 /* eslint-disable */
 /* tslint:disable */
-import * as fetch from 'node-fetch';
+import fetch from 'node-fetch';
 import * as Headers from 'fetch-headers';
+import { Response } from 'node-fetch';
 
 export type ThenArg<T> = T extends Promise<infer U>
     ? U
@@ -101,6 +102,29 @@ class {{&className}} {
       return headers;
     }
     {{/isSecure}}
+
+
+    private async requestRaw(method: string, url: string, body: any, headers: Headers = new Headers(), queryParameters: QueryParameters = {}) {
+        const queryParams = queryParameters && Object.keys(queryParameters).length ? this.serializeQueryParams(queryParameters) : null ;
+        const urlWithParams = url + (queryParams ? '?' + queryParams : '');
+
+        if(headers.get('Content-Type') === 'application/json' && body && Object.keys(body).length > 0) {
+            body = JSON.stringify(body);
+        } else {
+            body = undefined;
+        }
+
+        if(headers.get('Content-Type') === 'multipart/form-data') {
+            headers.delete('Content-Type');
+        }
+
+        const response = await fetch(urlWithParams, { method, headers, body });
+        if(response.ok) {
+            return response;
+        } else {
+            throw new ApiError(response.statusText);
+        }
+    }
 
     private async request(method: string, url: string, body: any, headers: Headers = new Headers(), queryParameters: QueryParameters = {}) {
         const queryParams = queryParameters && Object.keys(queryParameters).length ? this.serializeQueryParams(queryParameters) : null ;
