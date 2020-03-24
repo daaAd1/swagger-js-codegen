@@ -45,17 +45,33 @@ class {{&className}} {
     {{/isSecure}}
 
     serializeQueryParams(parameters: QueryParameters) {
-        return Object.keys(parameters)
-            .reduce((acc: string[], p) => {
-                const param = parameters[p];
-                if(typeof param === 'undefined' || param === '') {
-                    return acc;
-                }
-                return [...acc, `${encodeURIComponent(p)}=${encodeURIComponent(
-                String(parameters[p]),
-                )}`];
-            }, [])
-            .join('&');
+    return Object.keys(parameters)
+    .reduce((acc: string[], p) => {
+    let param = parameters[p];
+    if (typeof param === 'undefined' || param === '') {
+    return acc;
+    }
+
+    let value = [`${encodeURIComponent(p)}=${encodeURIComponent(
+    String(parameters[p]),
+    )}`];
+
+
+    if(Array.isArray(parameters[p])){
+    param = parameters[p] as Array<string>;
+    value = param.map((x) => {
+    return `${encodeURIComponent(p)}=${encodeURIComponent(
+    String(x),
+    )}`
+    })
+    }
+
+    return [
+    ...acc,
+    ...value,
+    ];
+    }, [])
+    .join('&');
     }
 
     protected transformParameter(value: any, transformOperation?: string) {
