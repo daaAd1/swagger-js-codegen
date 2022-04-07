@@ -134,7 +134,12 @@ class {{&className}} {
             return {};
         } else {
             const err = new ApiError(response.statusText);
-            err.details = await response.json();
+            const responseContentType = (response.headers && response.headers.get('Content-Type')) || '';
+            if (responseContentType.includes('application/json')) {
+                err.details = await response.json();
+            } else {
+                err.details = response;
+            }
             throw err;
         }
     }
